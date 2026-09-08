@@ -8,3 +8,4 @@ When the selected unlock date arrives, the capsule becomes available to open. Th
 
 The website should have a clean, attractive, and mobile-friendly interface. It should protect users’ personal information and ensure that every user can access only their own capsules. The main goal of the Digital Time Capsule website is to create a meaningful digital space where users can connect with their future selves through memories and messages.
 <img width="1912" height="1016" alt="image" src="https://github.com/user-attachments/assets/2fee202e-61f5-4de5-b3b0-a8017faeb677" />
+https://stitch.withgoogle.com/projects/6874596740390997438
