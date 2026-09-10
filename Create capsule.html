@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create a New Capsule — Digital Time Capsule</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="sidebar-overlay" data-close-sidebar></div>
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark">⏳</span> Digital Time Capsule</div>
+    <nav>
+      <a href="dashboard.html"><span class="ico">🏠</span> Home</a>
+      <a href="create-capsule.html" class="active"><span class="ico">➕</span> Create Capsule</a>
+      <a href="my-capsules.html"><span class="ico">📦</span> My Capsules</a>
+      <a href="archive.html"><span class="ico">🗂️</span> Archive</a>
+      <a href="profile.html"><span class="ico">⚙️</span> Profile &amp; Settings</a>
+    </nav>
+    <a href="login.html" class="logout" data-logout><span class="ico">↩</span> Log Out</a>
+  </aside>
+
+  <div class="mobile-topbar">
+    <button class="icon-btn" data-open-sidebar aria-label="Open menu">☰</button>
+    <div class="brand" style="font-size:1rem;"><span class="brand-mark">⏳</span> Digital Time Capsule</div>
+    <span class="avatar" data-user-avatar>—</span>
+  </div>
+
+  <main class="app-main">
+    <div class="app-topbar">
+      <div class="search">🔍 Search your capsules…</div>
+      <div class="actions">
+        <a href="profile.html" class="icon-btn" title="Profile & Settings">⚙️</a>
+        <div class="user-chip"><span class="avatar" data-user-avatar>—</span> <span data-user-name>—</span></div>
+      </div>
+    </div>
+
+    <div class="app-content">
+      <h2 id="cc-heading">Create a New Capsule</h2>
+      <p>Write to your future self.</p>
+
+      <form class="form-card" id="capsule-form" novalidate>
+        <div class="field">
+          <label for="cc-title">Title *</label>
+          <input id="cc-title" type="text" placeholder="e.g., A letter to my future self" required>
+        </div>
+
+        <div class="field">
+          <label for="cc-message">Message *</label>
+          <textarea id="cc-message" rows="6" maxlength="2000" placeholder="Write your message here…" required></textarea>
+        </div>
+        <div class="char-count" id="cc-charcount">0/2000</div>
+
+        <div class="field">
+          <label for="cc-mood">Mood *</label>
+          <select id="cc-mood" required>
+            <option value="" disabled selected>Select a mood</option>
+            <option>Hopeful</option>
+            <option>Grateful</option>
+            <option>Excited</option>
+            <option>Peaceful</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Add a photo (optional)</label>
+          <div class="dropzone" data-dropzone>
+            <div class="dz-ico">⤴</div>
+            <div data-dz-label>Click to upload or drag and drop<br>JPG, PNG (max ~2MB)</div>
+            <input type="file" accept="image/*" hidden>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Unlock Date &amp; Time *</label>
+          <div class="two-col">
+            <input type="date" id="cc-date" required>
+            <input type="time" id="cc-time" required>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-danger" id="cc-delete-btn" style="display:none; margin-right:auto;">Delete</button>
+          <a href="my-capsules.html" class="btn btn-ghost">Cancel</a>
+          <button type="submit" class="btn btn-primary" id="cc-submit-btn">Seal My Capsule</button>
+        </div>
+      </form>
+    </div>
+  </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
