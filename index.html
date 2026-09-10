@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container" id="home-hero">
   <header class="top-nav">
     <a href="index.html" class="brand">
       <span class="brand-mark">⏳</span> Digital Time Capsule
@@ -18,10 +18,10 @@
     <nav>
       <a href="index.html" class="active">Home</a>
       <a href="#about">About</a>
-      <a href="login.html">Login</a>
+      <a href="login.html" data-nav-login>Login</a>
     </nav>
     <div class="cta">
-      <a href="signup.html" class="btn btn-primary btn-sm">Sign Up</a>
+      <a href="signup.html" class="btn btn-primary btn-sm" data-nav-signup>Sign Up</a>
     </div>
   </header>
 
@@ -29,7 +29,7 @@
     <div>
       <h1>Save your today for a brighter tomorrow</h1>
       <p class="lede">A private space to store your memories, messages, and dreams — and revisit them when the time is right.</p>
-      <a href="signup.html" class="btn btn-primary">Create Your Capsule →</a>
+      <a href="signup.html" class="btn btn-primary" data-cta-create>Create Your Capsule →</a>
     </div>
     <div class="hero-art">
       <div class="polaroid">
@@ -65,4 +65,3 @@
 <script src="script.js"></script>
 </body>
 </html>
-
