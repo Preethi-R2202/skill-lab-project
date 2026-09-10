@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Archive — Digital Time Capsule</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="sidebar-overlay" data-close-sidebar></div>
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark">⏳</span> Digital Time Capsule</div>
+    <nav>
+      <a href="dashboard.html"><span class="ico">🏠</span> Home</a>
+      <a href="create-capsule.html"><span class="ico">➕</span> Create Capsule</a>
+      <a href="my-capsules.html"><span class="ico">📦</span> My Capsules</a>
+      <a href="archive.html" class="active"><span class="ico">🗂️</span> Archive</a>
+      <a href="profile.html"><span class="ico">⚙️</span> Profile &amp; Settings</a>
+    </nav>
+    <a href="login.html" class="logout" data-logout><span class="ico">↩</span> Log Out</a>
+  </aside>
+
+  <div class="mobile-topbar">
+    <button class="icon-btn" data-open-sidebar aria-label="Open menu">☰</button>
+    <div class="brand" style="font-size:1rem;"><span class="brand-mark">⏳</span> Digital Time Capsule</div>
+    <span class="avatar" data-user-avatar>—</span>
+  </div>
+
+  <main class="app-main">
+    <div class="app-topbar">
+      <div class="search">🔍 Search your capsules…</div>
+      <div class="actions">
+        <a href="profile.html" class="icon-btn" title="Profile & Settings">⚙️</a>
+        <div class="user-chip"><span class="avatar" data-user-avatar>—</span> <span data-user-name>—</span></div>
+      </div>
+    </div>
+
+    <div class="app-content">
+      <h2>My Archive</h2>
+      <p>All your opened capsules, saved forever.</p>
+
+      <div class="archive-filters">
+        <button class="pill active" data-mood="All">All</button>
+        <button class="pill" data-mood="Hopeful">Hopeful</button>
+        <button class="pill" data-mood="Grateful">Grateful</button>
+        <button class="pill" data-mood="Excited">Excited</button>
+        <button class="pill" data-mood="Peaceful">Peaceful</button>
+        <select class="select-pill" id="archive-year-filter"><option value="All">Year</option></select>
+        <div class="archive-search">🔍 <input type="text" id="archive-search-input" placeholder="Search capsules..."></div>
+      </div>
+
+      <div class="capsule-list" id="archive-list"></div>
+      <div class="empty-state" id="archive-empty" style="display:none;">
+        <div class="e-ico">🗂️</div>
+        <h3>No memories here yet</h3>
+        <p>Opened capsules will appear in your archive automatically.</p>
+        <a href="my-capsules.html" class="btn btn-primary btn-sm">See My Capsules</a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
