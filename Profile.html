@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile &amp; Settings — Digital Time Capsule</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="sidebar-overlay" data-close-sidebar></div>
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark">⏳</span> Digital Time Capsule</div>
+    <nav>
+      <a href="dashboard.html"><span class="ico">🏠</span> Home</a>
+      <a href="create-capsule.html"><span class="ico">➕</span> Create Capsule</a>
+      <a href="my-capsules.html"><span class="ico">📦</span> My Capsules</a>
+      <a href="archive.html"><span class="ico">🗂️</span> Archive</a>
+      <a href="profile.html" class="active"><span class="ico">⚙️</span> Profile &amp; Settings</a>
+    </nav>
+    <a href="login.html" class="logout" data-logout><span class="ico">↩</span> Log Out</a>
+  </aside>
+
+  <div class="mobile-topbar">
+    <button class="icon-btn" data-open-sidebar aria-label="Open menu">☰</button>
+    <div class="brand" style="font-size:1rem;"><span class="brand-mark">⏳</span> Digital Time Capsule</div>
+    <span class="avatar" data-user-avatar>—</span>
+  </div>
+
+  <main class="app-main">
+    <div class="app-topbar">
+      <div class="search">🔍 Search your capsules…</div>
+      <div class="actions">
+        <a href="profile.html" class="icon-btn" title="Profile & Settings">⚙️</a>
+        <div class="user-chip"><span class="avatar" data-user-avatar>—</span> <span data-user-name>—</span></div>
+      </div>
+    </div>
+
+    <div class="app-content">
+      <h2>Profile &amp; Settings</h2>
+
+      <div class="profile-grid">
+        <form class="panel" id="profile-form">
+          <div class="profile-avatar-row">
+            <span class="avatar" data-user-avatar>—</span>
+            <div>
+              <div style="font-weight:600;" data-user-name>—</div>
+              <span style="font-size:0.82rem; color:var(--ink-soft);" data-user-email>—</span>
+            </div>
+          </div>
+          <div class="field">
+            <label for="pr-name">Name</label>
+            <input id="pr-name" type="text">
+          </div>
+          <div class="field">
+            <label for="pr-email">Email</label>
+            <input id="pr-email" type="email">
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <button type="button" class="btn btn-outline btn-sm" id="pr-change-pass" style="width:100%;">Change Password</button>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
+        </form>
+
+        <div class="panel">
+          <h3>Preferences</h3>
+
+          <div class="settings-row">
+            <div class="txt"><strong>Dark Mode</strong></div>
+            <label class="switch">
+              <input type="checkbox" data-dark-toggle>
+              <span class="track"></span>
+            </label>
+          </div>
+          <div class="settings-row">
+            <div class="txt"><strong>Email Notifications</strong><span>Get notified when your capsule is ready to open.</span></div>
+            <label class="switch">
+              <input type="checkbox" id="pref-email-notif">
+              <span class="track"></span>
+            </label>
+          </div>
+          <div class="settings-row">
+            <div class="txt"><strong>Default Mood</strong></div>
+            <select class="select-pill" id="pref-default-mood">
+              <option value="">None</option>
+              <option>Hopeful</option>
+              <option>Grateful</option>
+              <option>Excited</option>
+              <option>Peaceful</option>
+            </select>
+          </div>
+
+          <h3 style="margin-top:26px;">Privacy</h3>
+          <div class="settings-row">
+            <div class="txt"><strong>Account Type</strong></div>
+            <select class="select-pill" disabled>
+              <option>Standard User</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
