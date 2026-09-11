@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Opened Capsule — Digital Time Capsule</title>
-  <meta name="description" content="Read your past letter and reflections in your opened digital time capsule.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Opened Capsule — Digital Time Capsule</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -15,60 +14,47 @@
 <div class="app-shell">
 
   <aside class="sidebar">
-    <a href="index.html" class="brand"><span class="brand-mark">⏳</span> Digital Time Capsule</a>
+    <div class="brand"><span class="brand-mark">⏳</span> Digital Time Capsule</div>
     <nav>
-      <a href="dashboard.html"><span class="ico">🏠</span> Dashboard</a>
+      <a href="dashboard.html"><span class="ico">🏠</span> Home</a>
       <a href="create-capsule.html"><span class="ico">➕</span> Create Capsule</a>
-      <a href="capsule-details.html"><span class="ico">📦</span> My Capsules</a>
+      <a href="my-capsules.html"><span class="ico">📦</span> My Capsules</a>
       <a href="archive.html" class="active"><span class="ico">🗂️</span> Archive</a>
       <a href="profile.html"><span class="ico">⚙️</span> Profile &amp; Settings</a>
     </nav>
-    <a href="#" class="logout" data-logout><span class="ico">↩</span> Log Out</a>
+    <a href="login.html" class="logout" data-logout><span class="ico">↩</span> Log Out</a>
   </aside>
 
   <div class="mobile-topbar">
     <button class="icon-btn" data-open-sidebar aria-label="Open menu">☰</button>
     <div class="brand" style="font-size:1rem;"><span class="brand-mark">⏳</span> Digital Time Capsule</div>
-    <span class="avatar">P</span>
+    <span class="avatar" data-user-avatar>—</span>
   </div>
 
   <main class="app-main">
     <div class="app-topbar">
-      <div class="search">
-        🔍 <input type="text" placeholder="Search your capsules…" data-search style="border:none; background:none; outline:none; font-size:0.88rem; width:100%; color:var(--ink);">
-      </div>
+      <div class="search">🔍 Search your capsules…</div>
       <div class="actions">
-        <button class="icon-btn" title="Toggle theme">🌙</button>
-        <button class="icon-btn" title="Notifications">🔔</button>
-        <a href="profile.html" class="user-chip"><span class="avatar">P</span> Preethi R ▾</a>
+        <a href="profile.html" class="icon-btn" title="Profile & Settings">⚙️</a>
+        <div class="user-chip"><span class="avatar" data-user-avatar>—</span> <span data-user-name>—</span></div>
       </div>
     </div>
 
-    <div class="app-content">
-      <div style="margin-bottom:18px;">
-        <a href="archive.html" style="font-size:0.88rem; color:var(--green); font-weight:600;">← Back to Archive</a>
-      </div>
-
+    <div class="app-content" id="opened-content">
       <div class="letter-wrap">
         <div class="polaroid-card">
-          <div class="frame"></div>
-          <div class="polaroid-caption">A moment preserved</div>
+          <div class="frame" data-oc="frame"></div>
         </div>
-
         <div class="letter-body">
-          <h2>Loading Memory…</h2>
-          <span class="mood-tag grateful"><span class="dot"></span>Grateful</span>
-          <p style="margin-top:14px; font-size:0.85rem;">Opened on <strong>—</strong></p>
+          <h2 data-oc="title">—</h2>
+          <span data-oc="mood"></span>
+          <p style="margin-top:14px; font-size:0.85rem;">Opened on <strong data-oc="date">—</strong></p>
 
-          <p class="letter-text" style="white-space:pre-line;">
-            Loading your personal letter…
-          </p>
-
-          <p class="sign-off">With love,<br>Your Past Self ❤</p>
+          <p class="letter-text" data-oc="text">—</p>
 
           <div class="letter-actions">
             <a href="archive.html" class="btn btn-primary btn-sm">View in Archive</a>
-            <button type="button" class="btn btn-outline btn-sm">Copy Share Link</button>
+            <button type="button" class="btn btn-outline btn-sm" id="oc-share-btn">Share</button>
           </div>
         </div>
       </div>
