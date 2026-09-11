@@ -3,65 +3,1166 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Digital Time Capsule — Save your today for a brighter tomorrow</title>
+<title>Digital Time Capsule</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<style>
+:root {
+  --cream: #FAF6EC; --cream-deep: #F1EADA; --paper: #FFFFFF; --ink: #2C2A24; --ink-soft: #6B6558; --line: #E5DDC8;
+  --green: #2F4A3D; --green-deep: #223A2F; --green-soft: #E4EBE3;
+  --mood-hopeful: #C98A3E; --mood-hopeful-bg: #FBEEDC;
+  --mood-grateful: #3F7D5C; --mood-grateful-bg: #E3F0E7;
+  --mood-excited: #B3563F; --mood-excited-bg: #F7E4DD;
+  --mood-peaceful: #7A5FA0; --mood-peaceful-bg: #EEE7F7;
+  --locked-bg: #E9E2F2; --locked-fg: #5B4C82;
+  --ready-bg: #FBE4D8; --ready-fg: #B3562F;
+  --opened-bg: #DDEEE0; --opened-fg: #2E7D46;
+  --radius-s: 8px; --radius-m: 14px; --radius-l: 22px;
+  --shadow: 0 4px 18px rgba(44,42,36,0.07); --shadow-deep: 0 10px 34px rgba(44,42,36,0.14);
+  --serif: "Lora", Georgia, serif; --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+body.dark {
+  --cream: #1B2320; --cream-deep: #141A17; --paper: #212B26; --ink: #EFEAE0; --ink-soft: #A9A398; --line: #33403A;
+  --green: #6FAE8C; --green-deep: #4C8067; --green-soft: #263630;
+  --mood-hopeful-bg: #3A2F20; --mood-grateful-bg: #1F3428; --mood-excited-bg: #3A2620; --mood-peaceful-bg: #2A2338;
+  --locked-bg: #2B2438; --ready-bg: #3A2A20; --opened-bg: #1F3428;
+  --shadow: 0 4px 18px rgba(0,0,0,0.35); --shadow-deep: 0 10px 34px rgba(0,0,0,0.5);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin:0; font-family: var(--sans); background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; transition: background .3s ease, color .3s ease; }
+h1,h2,h3,h4 { font-family: var(--serif); font-weight:600; color: var(--ink); margin:0 0 .4em; letter-spacing:.1px; }
+p { line-height:1.6; color: var(--ink-soft); margin:0 0 1em; }
+a { color: inherit; text-decoration: none; }
+img { max-width:100%; display:block; }
+button { font-family: var(--sans); cursor: pointer; }
+:focus-visible { outline:2px solid var(--green); outline-offset:2px; }
+.container { max-width:1180px; margin:0 auto; padding:0 32px; }
+
+.btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border:none; border-radius:var(--radius-s); padding:12px 22px; font-size:.95rem; font-weight:600; cursor:pointer; transition:transform .15s ease, box-shadow .15s ease, background .15s ease; }
+.btn-primary { background: var(--green); color:#fff; }
+.btn-primary:hover { background: var(--green-deep); box-shadow: var(--shadow); }
+.btn-outline { background:transparent; color: var(--green); border:1.5px solid var(--green); }
+.btn-outline:hover { background: var(--green-soft); }
+.btn-ghost { background:transparent; color: var(--ink-soft); }
+.btn-ghost:hover { color: var(--ink); }
+.btn-block { width:100%; }
+.btn-sm { padding:8px 14px; font-size:.85rem; }
+.btn-danger { background:transparent; color:#B3562F; border:1.5px solid #E7C7B4; }
+.btn-danger:hover { background: var(--mood-excited-bg); }
+
+.top-nav { display:flex; align-items:center; justify-content:space-between; padding:22px 0; border-bottom:1px solid var(--line); }
+.brand { display:flex; align-items:center; gap:10px; font-family:var(--serif); font-size:1.25rem; font-weight:600; }
+.brand-mark { width:34px; height:34px; border-radius:50%; background:var(--green-soft); display:flex; align-items:center; justify-content:center; color:var(--green); }
+.top-nav nav { display:flex; align-items:center; gap:34px; }
+.top-nav nav a { color: var(--ink-soft); font-size:.95rem; }
+.top-nav nav a.active, .top-nav nav a:hover { color: var(--ink); }
+.top-nav .cta { display:flex; align-items:center; gap:14px; }
+
+.hero { display:grid; grid-template-columns:1.1fr .9fr; gap:60px; align-items:center; padding:72px 0 40px; }
+.hero h1 { font-size:3rem; line-height:1.15; max-width:11ch; }
+.hero p.lede { font-size:1.08rem; max-width:46ch; }
+.hero-art { position:relative; background:linear-gradient(160deg,#EADFC5,#D9C79A 60%,#C9AE7A); border-radius:var(--radius-l); min-height:340px; overflow:hidden; }
+.hero-art .polaroid { position:absolute; bottom:26px; right:26px; width:58%; background:#fff; border-radius:6px; padding:10px 10px 26px; box-shadow:var(--shadow-deep); transform:rotate(-4deg); }
+.hero-art .polaroid .frame { aspect-ratio:4/3; border-radius:3px; background:linear-gradient(180deg,#F3C77E,#E08A5B 55%,#8B5E4A); }
+
+.feature-row { display:grid; grid-template-columns:repeat(4,1fr); gap:24px; padding:44px 0 72px; border-top:1px solid var(--line); }
+.feature-row .feature { text-align:left; }
+.feature-row .feature .icon { width:40px; height:40px; border-radius:50%; background:var(--green-soft); color:var(--green); display:flex; align-items:center; justify-content:center; margin-bottom:14px; }
+.feature-row .feature h4 { font-family:var(--sans); font-size:1rem; margin-bottom:4px; }
+.feature-row .feature p { font-size:.9rem; margin:0; }
+
+.auth-wrap { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:40px 20px; }
+.auth-card { width:100%; max-width:420px; background:var(--paper); border-radius:var(--radius-l); box-shadow:var(--shadow-deep); padding:40px 38px 34px; }
+.auth-card .brand { justify-content:center; margin-bottom:18px; }
+.auth-card h1 { text-align:center; font-size:1.5rem; }
+.auth-card .sub { text-align:center; font-size:.92rem; margin-bottom:26px; }
+.field { margin-bottom:16px; }
+.field label { display:block; font-size:.85rem; font-weight:600; margin-bottom:6px; color:var(--ink); }
+.field .input-wrap { position:relative; }
+.field input, .field textarea, .field select { width:100%; padding:11px 14px; border-radius:var(--radius-s); border:1.5px solid var(--line); background:var(--cream); font-family:var(--sans); font-size:.94rem; color:var(--ink); }
+.field input:focus, .field textarea:focus, .field select:focus { border-color:var(--green); outline:none; background:var(--paper); }
+.field .toggle-eye { position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; color:var(--ink-soft); font-size:.85rem; }
+.row-between { display:flex; align-items:center; justify-content:space-between; font-size:.85rem; margin-bottom:18px; }
+.row-between label { display:flex; align-items:center; gap:6px; color:var(--ink-soft); font-weight:400; }
+.auth-foot { text-align:center; font-size:.88rem; margin-top:20px; color:var(--ink-soft); }
+.auth-foot a { color:var(--green); font-weight:600; }
+.form-error { display:none; background:var(--mood-excited-bg); color:#B3562F; border-radius:var(--radius-s); padding:10px 14px; font-size:.85rem; margin-bottom:14px; }
+
+.app-shell { display:none; min-height:100vh; }
+.sidebar { width:232px; flex-shrink:0; background:var(--paper); border-right:1px solid var(--line); padding:22px 18px; display:flex; flex-direction:column; position:sticky; top:0; height:100vh; }
+.sidebar .brand { padding:6px 6px 26px; font-size:1.1rem; }
+.sidebar nav { display:flex; flex-direction:column; gap:4px; flex:1; }
+.sidebar nav a { display:flex; align-items:center; gap:12px; padding:10px 12px; border-radius:var(--radius-s); color:var(--ink-soft); font-size:.92rem; font-weight:500; }
+.sidebar nav a .ico { width:18px; text-align:center; }
+.sidebar nav a:hover { background:var(--cream-deep); color:var(--ink); }
+.sidebar nav a.active { background:var(--green); color:#fff; }
+.sidebar .logout { display:flex; align-items:center; gap:10px; padding:10px 12px; color:var(--ink-soft); font-size:.9rem; border-top:1px solid var(--line); margin-top:12px; padding-top:18px; }
+
+.app-main { flex:1; min-width:0; }
+.app-topbar { display:flex; align-items:center; justify-content:space-between; padding:18px 34px; border-bottom:1px solid var(--line); background:var(--paper); position:sticky; top:0; z-index:5; }
+.app-topbar .search { display:flex; align-items:center; gap:10px; background:var(--cream); border:1px solid var(--line); border-radius:999px; padding:8px 16px; width:320px; color:var(--ink-soft); font-size:.88rem; }
+.app-topbar .actions { display:flex; align-items:center; gap:18px; }
+.icon-btn { width:36px; height:36px; border-radius:50%; border:1px solid var(--line); background:var(--paper); display:flex; align-items:center; justify-content:center; color:var(--ink-soft); font-size:.95rem; }
+.avatar { width:34px; height:34px; border-radius:50%; background:var(--green-soft); color:var(--green); display:flex; align-items:center; justify-content:center; font-weight:600; font-size:.85rem; }
+.user-chip { display:flex; align-items:center; gap:8px; font-size:.9rem; font-weight:600; }
+.app-content { display:none; padding:30px 34px 60px; max-width:1080px; }
+
+.stat-row { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin:24px 0 32px; }
+.stat-card { background:var(--paper); border:1px solid var(--line); border-radius:var(--radius-m); padding:20px; display:flex; align-items:center; gap:14px; }
+.stat-card .stat-ico { width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.05rem; }
+.stat-card.locked .stat-ico { background:var(--locked-bg); color:var(--locked-fg); }
+.stat-card.ready .stat-ico { background:var(--ready-bg); color:var(--ready-fg); }
+.stat-card.opened .stat-ico { background:var(--opened-bg); color:var(--opened-fg); }
+.stat-card .num { font-family:var(--serif); font-size:1.6rem; font-weight:600; line-height:1; }
+.stat-card .label { font-size:.85rem; color:var(--ink-soft); }
+
+.section-head { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:14px; }
+.section-head h3 { font-size:1.1rem; }
+.section-head a { font-size:.85rem; color:var(--green); font-weight:600; }
+
+.capsule-list { display:flex; flex-direction:column; gap:10px; }
+.capsule-row { display:flex; align-items:center; gap:16px; background:var(--paper); border:1px solid var(--line); border-radius:var(--radius-m); padding:12px 16px; transition:box-shadow .15s ease, transform .15s ease; }
+.capsule-row:hover { box-shadow:var(--shadow); transform:translateY(-1px); }
+.capsule-row .thumb { width:52px; height:52px; border-radius:10px; background:linear-gradient(160deg,#F3C77E,#C9714E); flex-shrink:0; background-size:cover; background-position:center; }
+.capsule-row .meta { flex:1; min-width:0; }
+.capsule-row .meta .title { font-weight:600; font-size:.95rem; margin-bottom:3px; }
+.capsule-row .meta .sub { font-size:.8rem; color:var(--ink-soft); display:flex; align-items:center; gap:6px; }
+
+.badge { display:inline-flex; align-items:center; gap:5px; font-size:.72rem; font-weight:700; padding:4px 10px; border-radius:999px; }
+.badge.locked { background:var(--locked-bg); color:var(--locked-fg); }
+.badge.ready { background:var(--ready-bg); color:var(--ready-fg); }
+.badge.opened { background:var(--opened-bg); color:var(--opened-fg); }
+
+.mood-tag { display:inline-flex; align-items:center; gap:5px; font-size:.76rem; font-weight:600; padding:3px 9px; border-radius:999px; }
+.mood-tag.hopeful { background:var(--mood-hopeful-bg); color:var(--mood-hopeful); }
+.mood-tag.grateful { background:var(--mood-grateful-bg); color:var(--mood-grateful); }
+.mood-tag.excited { background:var(--mood-excited-bg); color:var(--mood-excited); }
+.mood-tag.peaceful { background:var(--mood-peaceful-bg); color:var(--mood-peaceful); }
+.mood-tag .dot { width:6px; height:6px; border-radius:50%; background:currentColor; }
+
+.form-card { background:var(--paper); border:1px solid var(--line); border-radius:var(--radius-l); padding:32px 36px; max-width:640px; }
+.char-count { font-size:.78rem; color:var(--ink-soft); text-align:right; margin-top:-10px; margin-bottom:14px; }
+.dropzone { border:1.5px dashed var(--line); border-radius:var(--radius-m); padding:28px; text-align:center; color:var(--ink-soft); font-size:.88rem; background:var(--cream); margin-bottom:18px; cursor:pointer; transition:border-color .15s ease; }
+.dropzone:hover { border-color: var(--green); }
+.dropzone .dz-ico { font-size:1.4rem; margin-bottom:8px; color:var(--green); }
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.form-actions { display:flex; gap:12px; justify-content:flex-end; margin-top:8px; }
+
+.capsule-detail-card { background:var(--paper); border-radius:var(--radius-l); overflow:hidden; max-width:620px; box-shadow:var(--shadow); }
+.capsule-hero-img { height:190px; background:linear-gradient(160deg,#F3C77E 0%,#E08A5B 55%,#8B5E4A 100%); background-size:cover; background-position:center; }
+.capsule-detail-body { padding:26px 30px 32px; }
+.capsule-detail-body .dates { display:flex; gap:28px; margin:14px 0 22px; font-size:.85rem; color:var(--ink-soft); }
+.capsule-detail-body .dates strong { display:block; color:var(--ink); font-weight:600; font-size:.9rem; }
+.lock-panel { text-align:center; padding:30px 10px 10px; }
+.lock-panel .lock-ico { width:64px; height:64px; border-radius:50%; background:var(--green-soft); color:var(--green); display:flex; align-items:center; justify-content:center; font-size:1.5rem; margin:0 auto 18px; }
+.countdown { display:flex; justify-content:center; gap:22px; margin:22px 0 26px; }
+.countdown .unit { text-align:center; }
+.countdown .unit .n { font-family:var(--serif); font-size:2rem; font-weight:600; }
+.countdown .unit .u { font-size:.75rem; color:var(--ink-soft); text-transform:lowercase; }
+.notice-row { display:flex; align-items:center; justify-content:center; gap:8px; font-size:.85rem; color:var(--ink-soft); }
+
+.letter-wrap { display:grid; grid-template-columns:260px 1fr; gap:30px; max-width:780px; }
+.polaroid-card { background:#fff; border-radius:8px; padding:12px 12px 34px; box-shadow:var(--shadow-deep); transform:rotate(-3deg); height:fit-content; }
+.polaroid-card .frame { aspect-ratio:4/3; border-radius:4px; background:linear-gradient(160deg,#F3C77E,#E08A5B 55%,#8B5E4A); background-size:cover; background-position:center; }
+.letter-body { background:var(--paper); border-radius:var(--radius-l); padding:30px 32px; box-shadow:var(--shadow); }
+.letter-body .letter-text { font-family:var(--serif); font-size:1.02rem; line-height:1.9; color:var(--ink); }
+.letter-actions { display:flex; gap:10px; margin-top:22px; }
+
+.archive-filters { display:flex; align-items:center; gap:10px; margin-bottom:22px; flex-wrap:wrap; }
+.pill { padding:8px 16px; border-radius:999px; border:1px solid var(--line); background:var(--paper); font-size:.85rem; font-weight:600; color:var(--ink-soft); }
+.pill.active { background:var(--green); color:#fff; border-color:var(--green); }
+.select-pill { padding:8px 14px; border-radius:999px; border:1px solid var(--line); background:var(--paper); font-size:.85rem; color:var(--ink); }
+.archive-search { margin-left:auto; display:flex; align-items:center; gap:8px; background:var(--paper); border:1px solid var(--line); border-radius:999px; padding:8px 16px; font-size:.85rem; color:var(--ink-soft); min-width:220px; }
+.archive-search input { border:none; background:none; outline:none; font-size:.85rem; width:100%; color:var(--ink); }
+
+.profile-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; max-width:900px; }
+.panel { background:var(--paper); border:1px solid var(--line); border-radius:var(--radius-l); padding:26px 28px; }
+.panel h3 { font-size:1.02rem; margin-bottom:18px; }
+.profile-avatar-row { display:flex; align-items:center; gap:16px; margin-bottom:22px; }
+.profile-avatar-row .avatar { width:58px; height:58px; font-size:1.2rem; }
+.settings-row { display:flex; align-items:center; justify-content:space-between; padding:12px 0; border-bottom:1px solid var(--line); }
+.settings-row:last-child { border-bottom:none; }
+.settings-row .txt strong { display:block; font-size:.92rem; }
+.settings-row .txt span { font-size:.8rem; color:var(--ink-soft); }
+
+.switch { position:relative; width:42px; height:24px; }
+.switch input { opacity:0; width:0; height:0; }
+.switch .track { position:absolute; inset:0; background:var(--line); border-radius:999px; transition:background .2s ease; cursor:pointer; }
+.switch .track::before { content:""; position:absolute; width:18px; height:18px; left:3px; top:3px; background:#fff; border-radius:50%; transition:transform .2s ease; }
+.switch input:checked + .track { background:var(--green); }
+.switch input:checked + .track::before { transform:translateX(18px); }
+
+.empty-state { text-align:center; padding:60px 20px; color:var(--ink-soft); border:1.5px dashed var(--line); border-radius:var(--radius-l); }
+.empty-state .e-ico { font-size:1.8rem; margin-bottom:12px; color:var(--green); }
+
+.mobile-topbar { display:none; }
+
+@media (max-width:900px) {
+  .hero { grid-template-columns:1fr; padding-top:40px; }
+  .hero h1 { font-size:2.3rem; max-width:none; }
+  .feature-row { grid-template-columns:repeat(2,1fr); }
+  .top-nav nav { display:none; }
+  .letter-wrap { grid-template-columns:1fr; }
+  .polaroid-card { transform:none; max-width:220px; }
+  .profile-grid { grid-template-columns:1fr; }
+  .app-shell { flex-direction:column; }
+  .sidebar { position:fixed; left:-260px; top:0; height:100vh; z-index:50; transition:left .25s ease; box-shadow:var(--shadow-deep); }
+  .sidebar.open { left:0; }
+  .mobile-topbar { display:flex; align-items:center; justify-content:space-between; padding:16px 20px; background:var(--paper); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:20; }
+  .app-topbar { display:none; }
+  .app-content { padding:22px 18px 50px; }
+  .stat-row { grid-template-columns:1fr; }
+  .two-col { grid-template-columns:1fr; }
+  .form-card { padding:22px; }
+  .archive-search { margin-left:0; width:100%; }
+  .sidebar-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.35); z-index:40; }
+  .sidebar-overlay.show { display:block; }
+}
+
+/* SPA page visibility defaults */
+.page { display:none; }
+#page-home { display:block; }
+#content-dashboard { display:block; }
+</style>
 </head>
 <body>
 
-<div class="container" id="home-hero">
-  <header class="top-nav">
-    <a href="index.html" class="brand">
-      <span class="brand-mark">⏳</span> Digital Time Capsule
-    </a>
-    <nav>
-      <a href="index.html" class="active">Home</a>
-      <a href="#about">About</a>
-      <a href="login.html" data-nav-login>Login</a>
-    </nav>
-    <div class="cta">
-      <a href="signup.html" class="btn btn-primary btn-sm" data-nav-signup>Sign Up</a>
-    </div>
-  </header>
-
-  <section class="hero">
-    <div>
-      <h1>Save your today for a brighter tomorrow</h1>
-      <p class="lede">A private space to store your memories, messages, and dreams — and revisit them when the time is right.</p>
-      <a href="signup.html" class="btn btn-primary" data-cta-create>Create Your Capsule →</a>
-    </div>
-    <div class="hero-art">
-      <div class="polaroid">
-        <div class="frame"></div>
+<!-- ======================= PUBLIC PAGE: HOME ======================= -->
+<div class="page" id="page-home">
+  <div class="container">
+    <header class="top-nav">
+      <a href="#/home" class="brand"><span class="brand-mark">⏳</span> Digital Time Capsule</a>
+      <nav>
+        <a href="#/home" class="active">Home</a>
+        <a href="#about-section">About</a>
+        <a href="#/login" id="home-login-link">Login</a>
+      </nav>
+      <div class="cta">
+        <a href="#/signup" class="btn btn-primary btn-sm" id="home-signup-link">Sign Up</a>
       </div>
-    </div>
-  </section>
+    </header>
 
-  <section class="feature-row" id="about">
-    <div class="feature">
-      <div class="icon">🔒</div>
-      <h4>Private &amp; Secure</h4>
-      <p>Your memories, your space.</p>
-    </div>
-    <div class="feature">
-      <div class="icon">📅</div>
-      <h4>Set Your Own Date</h4>
-      <p>Revisit at the right time.</p>
-    </div>
-    <div class="feature">
-      <div class="icon">🖼️</div>
-      <h4>Photos &amp; Messages</h4>
-      <p>Save what matters.</p>
-    </div>
-    <div class="feature">
-      <div class="icon">💛</div>
-      <h4>Your Personal Archive</h4>
-      <p>Relive your journey.</p>
-    </div>
-  </section>
+    <section class="hero">
+      <div>
+        <h1>Save your today for a brighter tomorrow</h1>
+        <p class="lede">A private space to store your memories, messages, and dreams — and revisit them when the time is right.</p>
+        <a href="#/signup" class="btn btn-primary" id="home-cta-link">Create Your Capsule →</a>
+      </div>
+      <div class="hero-art"><div class="polaroid"><div class="frame"></div></div></div>
+    </section>
+
+    <section class="feature-row" id="about-section">
+      <div class="feature"><div class="icon">🔒</div><h4>Private &amp; Secure</h4><p>Your memories, your space.</p></div>
+      <div class="feature"><div class="icon">📅</div><h4>Set Your Own Date</h4><p>Revisit at the right time.</p></div>
+      <div class="feature"><div class="icon">🖼️</div><h4>Photos &amp; Messages</h4><p>Save what matters.</p></div>
+      <div class="feature"><div class="icon">💛</div><h4>Your Personal Archive</h4><p>Relive your journey.</p></div>
+    </section>
+  </div>
 </div>
 
-<script src="script.js"></script>
+<!-- ======================= PUBLIC PAGE: SIGN UP ======================= -->
+<div class="page" id="page-signup">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="brand"><span class="brand-mark">⏳</span> Digital Time Capsule</div>
+      <h1>Create your account</h1>
+      <p class="sub">Start saving your memories for the future.</p>
+      <div class="form-error" id="signup-error"></div>
+      <form id="signup-form" novalidate>
+        <div class="field"><label for="su-name">Full Name</label><input id="su-name" type="text" placeholder="Enter your name" required></div>
+        <div class="field"><label for="su-email">Email Address</label><input id="su-email" type="email" placeholder="Enter your email" required></div>
+        <div class="field">
+          <label for="su-pass">Password</label>
+          <div class="input-wrap">
+            <input id="su-pass" type="password" placeholder="Create a password (min 4 characters)" required minlength="4">
+            <button type="button" class="toggle-eye" data-toggle-pass="#su-pass">Show</button>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+      </form>
+      <p class="auth-foot">Already have an account? <a href="#/login">Login</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= PUBLIC PAGE: LOGIN ======================= -->
+<div class="page" id="page-login">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="brand"><span class="brand-mark">⏳</span> Digital Time Capsule</div>
+      <h1>Welcome Back!</h1>
+      <p class="sub">Log in to continue to your time capsule.</p>
+      <div class="form-error" id="login-error"></div>
+      <form id="login-form" novalidate>
+        <div class="field"><label for="li-email">Email Address</label><input id="li-email" type="email" placeholder="Enter your email" required></div>
+        <div class="field">
+          <label for="li-pass">Password</label>
+          <div class="input-wrap">
+            <input id="li-pass" type="password" placeholder="Enter your password" required>
+            <button type="button" class="toggle-eye" data-toggle-pass="#li-pass">Show</button>
+          </div>
+        </div>
+        <div class="row-between"><label><input type="checkbox"> Remember me</label><a href="#">Forgot password?</a></div>
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
+      </form>
+      <p class="auth-foot">Don't have an account? <a href="#/signup">Sign Up</a></p>
+      <p class="auth-foot" style="font-size:.78rem;">Demo tip: sign up first — accounts are stored in this browser only.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= AUTHENTICATED APP SHELL ======================= -->
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+<div class="app-shell" id="app-shell">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><span class="brand-mark">⏳</span> Digital Time Capsule</div>
+    <nav>
+      <a href="#/dashboard" data-nav="dashboard"><span class="ico">🏠</span> Home</a>
+      <a href="#/create-capsule" data-nav="create-capsule"><span class="ico">➕</span> Create Capsule</a>
+      <a href="#/my-capsules" data-nav="my-capsules"><span class="ico">📦</span> My Capsules</a>
+      <a href="#/archive" data-nav="archive"><span class="ico">🗂️</span> Archive</a>
+      <a href="#/profile" data-nav="profile"><span class="ico">⚙️</span> Profile &amp; Settings</a>
+    </nav>
+    <a href="#/login" class="logout" data-logout><span class="ico">↩</span> Log Out</a>
+  </aside>
+
+  <div class="mobile-topbar">
+    <button class="icon-btn" id="mobile-menu-btn" aria-label="Open menu">☰</button>
+    <div class="brand" style="font-size:1rem;"><span class="brand-mark">⏳</span> Digital Time Capsule</div>
+    <span class="avatar" data-user-avatar>—</span>
+  </div>
+
+  <main class="app-main">
+    <div class="app-topbar">
+      <a href="#/my-capsules" class="search" style="cursor:pointer;">🔍 Search your capsules…</a>
+      <div class="actions">
+        <a href="#/profile" class="icon-btn" title="Profile & Settings">⚙️</a>
+        <div class="user-chip"><span class="avatar" data-user-avatar>—</span> <span data-user-name>—</span></div>
+      </div>
+    </div>
+
+    <!-- ---------- DASHBOARD ---------- -->
+    <div class="app-content" id="content-dashboard">
+      <h2>Hello, <span data-user-name>there</span>!</h2>
+      <p>Here are your time capsules.</p>
+      <div class="stat-row">
+        <div class="stat-card locked"><div class="stat-ico">🔒</div><div><div class="num" data-stat="locked">0</div><div class="label">Locked</div></div></div>
+        <div class="stat-card ready"><div class="stat-ico">⏰</div><div><div class="num" data-stat="ready">0</div><div class="label">Ready to Open</div></div></div>
+        <div class="stat-card opened"><div class="stat-ico">✅</div><div><div class="num" data-stat="opened">0</div><div class="label">Opened</div></div></div>
+      </div>
+      <div class="section-head"><h3>Recent Capsules</h3><a href="#/my-capsules">View all →</a></div>
+      <div class="capsule-list" id="recent-capsules-list"></div>
+      <div class="empty-state" id="recent-empty-state" style="display:none;">
+        <div class="e-ico">⏳</div><h3>No capsules yet</h3><p>Write your first message to your future self.</p>
+        <a href="#/create-capsule" class="btn btn-primary btn-sm">Create Your Capsule</a>
+      </div>
+    </div>
+
+    <!-- ---------- MY CAPSULES ---------- -->
+    <div class="app-content" id="content-my-capsules">
+      <div class="section-head" style="margin-bottom:6px;">
+        <h2 style="margin:0;">My Capsules</h2>
+        <a href="#/create-capsule" class="btn btn-primary btn-sm">+ New Capsule</a>
+      </div>
+      <p>Locked and ready-to-open capsules, soonest unlock first.</p>
+      <div class="capsule-list" id="my-capsules-list"></div>
+      <div class="empty-state" id="my-capsules-empty" style="display:none;">
+        <div class="e-ico">📦</div><h3>Nothing sealed yet</h3><p>Create a capsule and it will show up here until it's opened.</p>
+        <a href="#/create-capsule" class="btn btn-primary btn-sm">Create Your Capsule</a>
+      </div>
+    </div>
+
+    <!-- ---------- CREATE / EDIT CAPSULE ---------- -->
+    <div class="app-content" id="content-create-capsule">
+      <h2 id="cc-heading">Create a New Capsule</h2>
+      <p>Write to your future self.</p>
+      <form class="form-card" id="capsule-form" novalidate>
+        <div class="field"><label for="cc-title">Title *</label><input id="cc-title" type="text" placeholder="e.g., A letter to my future self" required></div>
+        <div class="field"><label for="cc-message">Message *</label><textarea id="cc-message" rows="6" maxlength="2000" placeholder="Write your message here…" required></textarea></div>
+        <div class="char-count" id="cc-charcount">0/2000</div>
+        <div class="field">
+          <label for="cc-mood">Mood *</label>
+          <select id="cc-mood" required>
+            <option value="" disabled selected>Select a mood</option>
+            <option>Hopeful</option><option>Grateful</option><option>Excited</option><option>Peaceful</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Add a photo (optional)</label>
+          <div class="dropzone" id="cc-dropzone">
+            <div class="dz-ico">⤴</div>
+            <div id="cc-dz-label">Click to upload or drag and drop<br>JPG, PNG (max ~2MB)</div>
+            <input type="file" id="cc-file-input" accept="image/*" hidden>
+          </div>
+        </div>
+        <div class="field">
+          <label>Unlock Date &amp; Time *</label>
+          <div class="two-col"><input type="date" id="cc-date" required><input type="time" id="cc-time" required></div>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-danger" id="cc-delete-btn" style="display:none; margin-right:auto;">Delete</button>
+          <a href="#/my-capsules" class="btn btn-ghost">Cancel</a>
+          <button type="submit" class="btn btn-primary" id="cc-submit-btn">Seal My Capsule</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- ---------- CAPSULE DETAIL / COUNTDOWN ---------- -->
+    <div class="app-content" id="content-capsule-detail">
+      <div class="empty-state" id="cd-not-found" style="display:none;">
+        <div class="e-ico">📦</div><h3>Capsule not found</h3><p>It may have been deleted.</p>
+        <a href="#/my-capsules" class="btn btn-primary btn-sm">Back to My Capsules</a>
+      </div>
+      <div class="capsule-detail-card" id="cd-card-wrap" style="display:none;">
+        <div class="capsule-hero-img" id="cd-hero"></div>
+        <div class="capsule-detail-body">
+          <h2 id="cd-title">—</h2>
+          <span class="mood-tag" id="cd-mood-tag"></span>
+          <div class="dates">
+            <div>Created on <strong id="cd-created">—</strong></div>
+            <div>Unlocks on <strong id="cd-unlock">—</strong></div>
+          </div>
+
+          <div class="lock-panel" id="cd-locked-panel">
+            <div class="lock-ico">🔒</div>
+            <h3>This memory is safely sealed.</h3>
+            <p>We can't revisit this until it's time to unlock.</p>
+            <div class="countdown" id="cd-countdown">
+              <div class="unit"><div class="n" id="cd-days">—</div><div class="u">days</div></div>
+              <div class="unit"><div class="n" id="cd-hours">—</div><div class="u">hours</div></div>
+              <div class="unit"><div class="n" id="cd-minutes">—</div><div class="u">minutes</div></div>
+              <div class="unit"><div class="n" id="cd-seconds">—</div><div class="u">seconds</div></div>
+            </div>
+            <div class="notice-row">🔔 You'll receive an email notification when it's ready</div>
+          </div>
+
+          <div class="lock-panel" id="cd-ready-panel" style="display:none;">
+            <div class="lock-ico">🔓</div>
+            <h3>It's time — this memory is ready.</h3>
+            <p>Your future self is waiting.</p>
+            <a href="#" id="cd-open-link" class="btn btn-primary" style="margin-top:10px;">Open Capsule</a>
+          </div>
+
+          <div class="form-actions" style="margin-top:26px;">
+            <button type="button" class="btn btn-danger btn-sm" id="cd-delete-btn">Delete</button>
+            <a href="#" id="cd-edit-link" class="btn btn-outline btn-sm">Edit Capsule</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------- OPENED CAPSULE (LETTER) ---------- -->
+    <div class="app-content" id="content-opened-capsule">
+      <div class="empty-state" id="oc-not-found" style="display:none;">
+        <div class="e-ico">📦</div><h3>Capsule not found</h3>
+        <a href="#/archive" class="btn btn-primary btn-sm">Go to Archive</a>
+      </div>
+      <div class="letter-wrap" id="oc-card-wrap" style="display:none;">
+        <div class="polaroid-card"><div class="frame" id="oc-frame"></div></div>
+        <div class="letter-body">
+          <h2 id="oc-title">—</h2>
+          <span class="mood-tag" id="oc-mood-tag"></span>
+          <p style="margin-top:14px; font-size:.85rem;">Opened on <strong id="oc-date">—</strong></p>
+          <p class="letter-text" id="oc-text">—</p>
+          <div class="letter-actions">
+            <a href="#/archive" class="btn btn-primary btn-sm">View in Archive</a>
+            <button type="button" class="btn btn-outline btn-sm" id="oc-share-btn">Share</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------- ARCHIVE ---------- -->
+    <div class="app-content" id="content-archive">
+      <h2>My Archive</h2>
+      <p>All your opened capsules, saved forever.</p>
+      <div class="archive-filters">
+        <button class="pill active" data-mood="All">All</button>
+        <button class="pill" data-mood="Hopeful">Hopeful</button>
+        <button class="pill" data-mood="Grateful">Grateful</button>
+        <button class="pill" data-mood="Excited">Excited</button>
+        <button class="pill" data-mood="Peaceful">Peaceful</button>
+        <select class="select-pill" id="archive-year-filter"><option value="All">Year</option></select>
+        <div class="archive-search">🔍 <input type="text" id="archive-search-input" placeholder="Search capsules..."></div>
+      </div>
+      <div class="capsule-list" id="archive-list"></div>
+      <div class="empty-state" id="archive-empty" style="display:none;">
+        <div class="e-ico">🗂️</div><h3>No memories here yet</h3><p>Opened capsules will appear in your archive automatically.</p>
+        <a href="#/my-capsules" class="btn btn-primary btn-sm">See My Capsules</a>
+      </div>
+    </div>
+
+    <!-- ---------- PROFILE & SETTINGS ---------- -->
+    <div class="app-content" id="content-profile">
+      <h2>Profile &amp; Settings</h2>
+      <div class="profile-grid">
+        <form class="panel" id="profile-form">
+          <div class="profile-avatar-row">
+            <span class="avatar" data-user-avatar>—</span>
+            <div><div style="font-weight:600;" data-user-name>—</div><span style="font-size:.82rem; color:var(--ink-soft);" data-user-email>—</span></div>
+          </div>
+          <div class="field"><label for="pr-name">Name</label><input id="pr-name" type="text"></div>
+          <div class="field"><label for="pr-email">Email</label><input id="pr-email" type="email"></div>
+          <div class="field"><label>Password</label><button type="button" class="btn btn-outline btn-sm" id="pr-change-pass" style="width:100%;">Change Password</button></div>
+          <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
+        </form>
+        <div class="panel">
+          <h3>Preferences</h3>
+          <div class="settings-row"><div class="txt"><strong>Dark Mode</strong></div><label class="switch"><input type="checkbox" id="pref-dark-toggle"><span class="track"></span></label></div>
+          <div class="settings-row"><div class="txt"><strong>Email Notifications</strong><span>Get notified when your capsule is ready to open.</span></div><label class="switch"><input type="checkbox" id="pref-email-notif"><span class="track"></span></label></div>
+          <div class="settings-row"><div class="txt"><strong>Default Mood</strong></div>
+            <select class="select-pill" id="pref-default-mood">
+              <option value="">None</option><option>Hopeful</option><option>Grateful</option><option>Excited</option><option>Peaceful</option>
+            </select>
+          </div>
+          <h3 style="margin-top:26px;">Privacy</h3>
+          <div class="settings-row"><div class="txt"><strong>Account Type</strong></div><select class="select-pill" disabled><option>Standard User</option></select></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+/* =========================================================================
+   Digital Time Capsule — Single-file SPA
+   Client-side demo backend using localStorage + hash-based routing.
+   ========================================================================= */
+
+/* ---------------------------- Storage layer ---------------------------- */
+const DB = {
+  usersKey: 'dtc_users', sessionKey: 'dtc_session', capsulesKey: 'dtc_capsules',
+  prefsKeyFor(userId) { return `dtc_prefs_${userId}`; },
+  getUsers() { return JSON.parse(localStorage.getItem(this.usersKey) || '[]'); },
+  saveUsers(users) { localStorage.setItem(this.usersKey, JSON.stringify(users)); },
+  getSession() { try { return JSON.parse(localStorage.getItem(this.sessionKey)); } catch { return null; } },
+  setSession(userId) { localStorage.setItem(this.sessionKey, JSON.stringify({ userId })); },
+  clearSession() { localStorage.removeItem(this.sessionKey); },
+  getCapsules() { return JSON.parse(localStorage.getItem(this.capsulesKey) || '[]'); },
+  saveCapsules(list) { localStorage.setItem(this.capsulesKey, JSON.stringify(list)); },
+  getPrefs(userId) {
+    const raw = localStorage.getItem(this.prefsKeyFor(userId));
+    return raw ? JSON.parse(raw) : { darkMode: false, emailNotifications: true, defaultMood: '' };
+  },
+  savePrefs(userId, prefs) { localStorage.setItem(this.prefsKeyFor(userId), JSON.stringify(prefs)); }
+};
+
+/* ------------------------------- Auth ----------------------------------- */
+const Auth = {
+  currentUser() {
+    const session = DB.getSession();
+    if (!session) return null;
+    return DB.getUsers().find(u => u.id === session.userId) || null;
+  },
+  signup(name, email, password) {
+    const users = DB.getUsers();
+    if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
+      throw new Error('An account with this email already exists. Try logging in instead.');
+    }
+    const user = { id: 'u_' + Date.now().toString(36), name, email, password };
+    users.push(user); DB.saveUsers(users); DB.setSession(user.id);
+    return user;
+  },
+  login(email, password) {
+    const user = DB.getUsers().find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
+    if (!user) throw new Error('Incorrect email or password.');
+    DB.setSession(user.id);
+    return user;
+  },
+  updateProfile(userId, updates) {
+    const users = DB.getUsers();
+    const idx = users.findIndex(u => u.id === userId);
+    if (idx === -1) return null;
+    users[idx] = { ...users[idx], ...updates };
+    DB.saveUsers(users);
+    return users[idx];
+  },
+  logout() {
+    DB.clearSession();
+    currentUser = null;
+    AppState.createEditId = null;
+    AppState.detailCapsuleId = null;
+    AppState.openedCapsuleId = null;
+    location.hash = '/login';
+  }
+};
+
+/* ----------------------------- Capsules --------------------------------- */
+const Capsules = {
+  all(userId) { return DB.getCapsules().filter(c => c.userId === userId); },
+  get(id) { return DB.getCapsules().find(c => c.id === id) || null; },
+  create(userId, data) {
+    const list = DB.getCapsules();
+    const capsule = {
+      id: 'c_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      userId, title: data.title, message: data.message, mood: data.mood, image: data.image || null,
+      createdAt: new Date().toISOString(), unlockAt: data.unlockAt, opened: false, openedAt: null
+    };
+    list.push(capsule); DB.saveCapsules(list);
+    return capsule;
+  },
+  update(id, data) {
+    const list = DB.getCapsules();
+    const idx = list.findIndex(c => c.id === id);
+    if (idx === -1) return null;
+    list[idx] = { ...list[idx], ...data };
+    DB.saveCapsules(list);
+    return list[idx];
+  },
+  delete(id) { DB.saveCapsules(DB.getCapsules().filter(c => c.id !== id)); },
+  markOpened(id) { return this.update(id, { opened: true, openedAt: new Date().toISOString() }); },
+  status(capsule) {
+    if (capsule.opened) return 'opened';
+    return new Date(capsule.unlockAt).getTime() <= Date.now() ? 'ready' : 'locked';
+  }
+};
+
+/* ------------------------------ Helpers ---------------------------------- */
+function moodClass(mood) { return (mood || '').toLowerCase(); }
+function initials(name) {
+  if (!name) return '?';
+  return name.trim().split(/\s+/).slice(0, 2).map(p => p[0].toUpperCase()).join('');
+}
+function formatDate(iso) {
+  if (!iso) return '—';
+  return new Date(iso).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+function statusBadge(status) {
+  if (status === 'locked') return '<span class="badge locked">Locked</span>';
+  if (status === 'ready') return '<span class="badge ready">Ready to Open</span>';
+  return '<span class="badge opened">Opened</span>';
+}
+function moodTagHtml(mood) {
+  if (!mood) return '';
+  return `<span class="mood-tag ${moodClass(mood)}"><span class="dot"></span>${escapeHtml(mood)}</span>`;
+}
+function setMoodTag(el, mood) {
+  el.className = `mood-tag ${moodClass(mood)}`;
+  el.innerHTML = `<span class="dot"></span>${escapeHtml(mood)}`;
+}
+function thumbStyle(capsule) {
+  return capsule.image ? `background-image:url('${capsule.image}');background-size:cover;background-position:center;` : '';
+}
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str || '';
+  return div.innerHTML;
+}
+function rowHtml(c) {
+  const status = Capsules.status(c);
+  const href = status === 'opened' ? `#/opened?id=${c.id}` : `#/capsule?id=${c.id}`;
+  return `
+    <a class="capsule-row" href="${href}">
+      <div class="thumb" style="${thumbStyle(c)}"></div>
+      <div class="meta">
+        <div class="title">${escapeHtml(c.title)}</div>
+        <div class="sub">${moodTagHtml(c.mood)} · ${formatDate(status === 'opened' ? c.openedAt : c.unlockAt)}</div>
+      </div>
+      ${statusBadge(status)}
+    </a>`;
+}
+
+/* --------------------------- Global app state ----------------------------- */
+let currentUser = null;
+const AppState = { createEditId: null, detailCapsuleId: null, openedCapsuleId: null };
+let archiveState = { mood: 'All', year: 'All', search: '' };
+
+/* --------------------------- Dark mode -------------------------------------- */
+function applyDarkModeFor(user) {
+  const prefs = DB.getPrefs(user.id);
+  document.body.classList.toggle('dark', !!prefs.darkMode);
+}
+
+/* --------------------------- User chip / nav -------------------------------- */
+function fillUserChip(user) {
+  document.querySelectorAll('[data-user-name]').forEach(el => { el.textContent = user.name; });
+  document.querySelectorAll('[data-user-email]').forEach(el => { el.textContent = user.email; });
+  document.querySelectorAll('[data-user-avatar]').forEach(el => { el.textContent = initials(user.name); });
+}
+function setActiveNav(navKey) {
+  document.querySelectorAll('.sidebar nav a[data-nav]').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('data-nav') === navKey);
+  });
+}
+function resetPasswordToggle(inputSelector) {
+  const input = document.querySelector(inputSelector);
+  if (!input) return;
+  input.type = 'password';
+  const btn = document.querySelector(`[data-toggle-pass="${inputSelector}"]`);
+  if (btn) btn.textContent = 'Show';
+}
+function closeMobileSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('show');
+}
+
+/* --------------------------- Dropzone (singleton) --------------------------- */
+const Dropzone = (() => {
+  const dz = document.getElementById('cc-dropzone');
+  const input = document.getElementById('cc-file-input');
+  const label = document.getElementById('cc-dz-label');
+  let currentDataUrl = null;
+
+  dz.addEventListener('click', () => input.click());
+  dz.addEventListener('dragover', (e) => { e.preventDefault(); dz.style.borderColor = 'var(--green)'; });
+  dz.addEventListener('dragleave', () => { dz.style.borderColor = ''; });
+  dz.addEventListener('drop', (e) => {
+    e.preventDefault(); dz.style.borderColor = '';
+    if (e.dataTransfer.files[0]) readFile(e.dataTransfer.files[0]);
+  });
+  input.addEventListener('change', () => { if (input.files[0]) readFile(input.files[0]); });
+
+  function readFile(file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      currentDataUrl = reader.result;
+      label.textContent = `Selected: ${file.name}`;
+    };
+    reader.readAsDataURL(file);
+  }
+  return {
+    reset() { currentDataUrl = null; input.value = ''; label.innerHTML = 'Click to upload or drag and drop<br>JPG, PNG (max ~2MB)'; },
+    getImage() { return currentDataUrl; },
+    setImage(dataUrl) { currentDataUrl = dataUrl; if (dataUrl) label.textContent = 'Existing photo attached'; }
+  };
+})();
+
+/* --------------------------- Countdown ticker (single instance) ------------- */
+function tickCapsuleCountdown() {
+  const countdownEl = document.getElementById('cd-countdown');
+  const iso = countdownEl && countdownEl.getAttribute('data-unlock');
+  if (!iso) return;
+  const diff = Math.max(0, new Date(iso).getTime() - Date.now());
+  const day = 86400000, hour = 3600000, minute = 60000;
+  document.getElementById('cd-days').textContent = String(Math.floor(diff / day)).padStart(2, '0');
+  document.getElementById('cd-hours').textContent = String(Math.floor((diff % day) / hour)).padStart(2, '0');
+  document.getElementById('cd-minutes').textContent = String(Math.floor((diff % hour) / minute)).padStart(2, '0');
+  document.getElementById('cd-seconds').textContent = String(Math.floor((diff % minute) / 1000)).padStart(2, '0');
+  const lockedPanel = document.getElementById('cd-locked-panel');
+  const readyPanel = document.getElementById('cd-ready-panel');
+  if (diff <= 0) { lockedPanel.style.display = 'none'; readyPanel.style.display = 'block'; }
+  else { lockedPanel.style.display = 'block'; readyPanel.style.display = 'none'; }
+}
+setInterval(tickCapsuleCountdown, 1000);
+
+/* =========================================================================
+   PAGE RENDER FUNCTIONS (called by the router each time a route activates)
+   ========================================================================= */
+
+function initHomePage() {
+  const user = Auth.currentUser();
+  const loginLink = document.getElementById('home-login-link');
+  const signupLink = document.getElementById('home-signup-link');
+  const ctaLink = document.getElementById('home-cta-link');
+  if (user) {
+    loginLink.textContent = 'Dashboard'; loginLink.href = '#/dashboard';
+    signupLink.textContent = 'Dashboard'; signupLink.href = '#/dashboard';
+    ctaLink.href = '#/dashboard';
+  } else {
+    loginLink.textContent = 'Login'; loginLink.href = '#/login';
+    signupLink.textContent = 'Sign Up'; signupLink.href = '#/signup';
+    ctaLink.href = '#/signup';
+  }
+}
+
+function initDashboardPage() {
+  const capsules = Capsules.all(currentUser.id);
+  const locked = capsules.filter(c => Capsules.status(c) === 'locked');
+  const ready = capsules.filter(c => Capsules.status(c) === 'ready');
+  const opened = capsules.filter(c => Capsules.status(c) === 'opened');
+  document.querySelectorAll('[data-stat="locked"]').forEach(el => el.textContent = locked.length);
+  document.querySelectorAll('[data-stat="ready"]').forEach(el => el.textContent = ready.length);
+  document.querySelectorAll('[data-stat="opened"]').forEach(el => el.textContent = opened.length);
+
+  const recent = [...capsules].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 3);
+  const list = document.getElementById('recent-capsules-list');
+  const empty = document.getElementById('recent-empty-state');
+  if (!recent.length) { list.innerHTML = ''; list.style.display = 'none'; empty.style.display = 'block'; return; }
+  empty.style.display = 'none'; list.style.display = 'flex';
+  list.innerHTML = recent.map(rowHtml).join('');
+}
+
+function initMyCapsulesPage() {
+  const list = document.getElementById('my-capsules-list');
+  const empty = document.getElementById('my-capsules-empty');
+  const capsules = Capsules.all(currentUser.id).filter(c => Capsules.status(c) !== 'opened')
+    .sort((a, b) => new Date(a.unlockAt) - new Date(b.unlockAt));
+  if (!capsules.length) { list.innerHTML = ''; list.style.display = 'none'; empty.style.display = 'block'; return; }
+  empty.style.display = 'none'; list.style.display = 'flex';
+  list.innerHTML = capsules.map(rowHtml).join('');
+}
+
+function initCreateCapsulePage(params) {
+  const form = document.getElementById('capsule-form');
+  const heading = document.getElementById('cc-heading');
+  const submitBtn = document.getElementById('cc-submit-btn');
+  const deleteBtn = document.getElementById('cc-delete-btn');
+  const messageEl = document.getElementById('cc-message');
+  const charCount = document.getElementById('cc-charcount');
+
+  form.reset();
+  Dropzone.reset();
+  charCount.textContent = '0/2000';
+  deleteBtn.style.display = 'none';
+  heading.textContent = 'Create a New Capsule';
+  submitBtn.textContent = 'Seal My Capsule';
+  AppState.createEditId = null;
+
+  const editId = params.get('id');
+  if (editId) {
+    const editingCapsule = Capsules.get(editId);
+    if (editingCapsule && editingCapsule.userId === currentUser.id) {
+      AppState.createEditId = editId;
+      heading.textContent = 'Edit Your Capsule';
+      submitBtn.textContent = 'Save Changes';
+      deleteBtn.style.display = 'inline-flex';
+      document.getElementById('cc-title').value = editingCapsule.title;
+      messageEl.value = editingCapsule.message;
+      charCount.textContent = `${editingCapsule.message.length}/2000`;
+      document.getElementById('cc-mood').value = editingCapsule.mood;
+      const unlockDate = new Date(editingCapsule.unlockAt);
+      document.getElementById('cc-date').value = unlockDate.toISOString().slice(0, 10);
+      document.getElementById('cc-time').value = unlockDate.toTimeString().slice(0, 5);
+      if (editingCapsule.image) Dropzone.setImage(editingCapsule.image);
+    }
+  } else {
+    const prefs = DB.getPrefs(currentUser.id);
+    if (prefs.defaultMood) document.getElementById('cc-mood').value = prefs.defaultMood;
+  }
+}
+
+function initCapsuleDetailPage(params) {
+  const id = params.get('id');
+  const capsule = id && Capsules.get(id);
+  const notFound = document.getElementById('cd-not-found');
+  const cardWrap = document.getElementById('cd-card-wrap');
+
+  if (!capsule || capsule.userId !== currentUser.id) {
+    AppState.detailCapsuleId = null;
+    notFound.style.display = 'block'; cardWrap.style.display = 'none';
+    return;
+  }
+  const status = Capsules.status(capsule);
+  if (status === 'opened') { location.hash = `/opened?id=${capsule.id}`; return; }
+
+  AppState.detailCapsuleId = capsule.id;
+  notFound.style.display = 'none'; cardWrap.style.display = 'block';
+
+  document.getElementById('cd-title').textContent = capsule.title;
+  setMoodTag(document.getElementById('cd-mood-tag'), capsule.mood);
+  document.getElementById('cd-created').textContent = formatDate(capsule.createdAt);
+  document.getElementById('cd-unlock').textContent = formatDate(capsule.unlockAt);
+
+  const hero = document.getElementById('cd-hero');
+  hero.style.backgroundImage = capsule.image ? `url('${capsule.image}')` : '';
+  hero.style.backgroundSize = capsule.image ? 'cover' : '';
+  hero.style.backgroundPosition = capsule.image ? 'center' : '';
+
+  document.getElementById('cd-edit-link').href = `#/create-capsule?id=${capsule.id}`;
+  document.getElementById('cd-open-link').href = `#/opened?id=${capsule.id}`;
+  document.getElementById('cd-countdown').setAttribute('data-unlock', capsule.unlockAt);
+  tickCapsuleCountdown();
+}
+
+function initOpenedCapsulePage(params) {
+  const id = params.get('id');
+  const capsule = id && Capsules.get(id);
+  const notFound = document.getElementById('oc-not-found');
+  const cardWrap = document.getElementById('oc-card-wrap');
+
+  if (!capsule || capsule.userId !== currentUser.id) {
+    AppState.openedCapsuleId = null;
+    notFound.style.display = 'block'; cardWrap.style.display = 'none';
+    return;
+  }
+  const status = Capsules.status(capsule);
+  if (status === 'locked') { location.hash = `/capsule?id=${capsule.id}`; return; }
+  if (status === 'ready') Capsules.markOpened(capsule.id);
+  const fresh = Capsules.get(capsule.id);
+
+  AppState.openedCapsuleId = fresh.id;
+  notFound.style.display = 'none'; cardWrap.style.display = 'grid';
+
+  document.getElementById('oc-title').textContent = fresh.title;
+  setMoodTag(document.getElementById('oc-mood-tag'), fresh.mood);
+  document.getElementById('oc-date').textContent = formatDate(fresh.openedAt);
+  document.getElementById('oc-text').innerHTML = escapeHtml(fresh.message).replace(/\n/g, '<br>');
+  const frame = document.getElementById('oc-frame');
+  frame.style.backgroundImage = fresh.image ? `url('${fresh.image}')` : '';
+  frame.style.backgroundSize = fresh.image ? 'cover' : '';
+  frame.style.backgroundPosition = fresh.image ? 'center' : '';
+}
+
+function populateArchiveYearFilter(capsules) {
+  const select = document.getElementById('archive-year-filter');
+  const years = [...new Set(capsules.map(c => new Date(c.openedAt).getFullYear()))].sort((a, b) => b - a);
+  select.innerHTML = '<option value="All">Year</option>' + years.map(y => `<option value="${y}">${y}</option>`).join('');
+}
+
+function renderArchiveList() {
+  let list = Capsules.all(currentUser.id).filter(c => Capsules.status(c) === 'opened');
+  if (archiveState.mood !== 'All') list = list.filter(c => c.mood === archiveState.mood);
+  if (archiveState.year !== 'All') list = list.filter(c => new Date(c.openedAt).getFullYear() === Number(archiveState.year));
+  if (archiveState.search) list = list.filter(c => c.title.toLowerCase().includes(archiveState.search));
+  list.sort((a, b) => new Date(b.openedAt) - new Date(a.openedAt));
+
+  const container = document.getElementById('archive-list');
+  const empty = document.getElementById('archive-empty');
+  if (!list.length) { container.innerHTML = ''; empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+  container.innerHTML = list.map(c => `
+    <a class="capsule-row" href="#/opened?id=${c.id}">
+      <div class="thumb" style="${thumbStyle(c)}"></div>
+      <div class="meta"><div class="title">${escapeHtml(c.title)}</div><div class="sub">${moodTagHtml(c.mood)} · ${formatDate(c.openedAt)}</div></div>
+      <span>›</span>
+    </a>`).join('');
+}
+
+function initArchivePage() {
+  archiveState = { mood: 'All', year: 'All', search: '' };
+  document.querySelectorAll('.archive-filters .pill').forEach(p => p.classList.toggle('active', p.getAttribute('data-mood') === 'All'));
+  document.getElementById('archive-search-input').value = '';
+  populateArchiveYearFilter(Capsules.all(currentUser.id).filter(c => Capsules.status(c) === 'opened'));
+  document.getElementById('archive-year-filter').value = 'All';
+  renderArchiveList();
+}
+
+function initProfilePage() {
+  const prefs = DB.getPrefs(currentUser.id);
+  document.getElementById('pr-name').value = currentUser.name;
+  document.getElementById('pr-email').value = currentUser.email;
+  document.getElementById('pref-dark-toggle').checked = !!prefs.darkMode;
+  document.getElementById('pref-email-notif').checked = prefs.emailNotifications !== false;
+  document.getElementById('pref-default-mood').value = prefs.defaultMood || '';
+}
+
+/* =========================================================================
+   ROUTER
+   ========================================================================= */
+const PUBLIC_PAGES = { '/home': 'page-home', '/signup': 'page-signup', '/login': 'page-login' };
+const APP_ROUTES = {
+  '/dashboard': { content: 'content-dashboard', nav: 'dashboard', init: initDashboardPage },
+  '/my-capsules': { content: 'content-my-capsules', nav: 'my-capsules', init: initMyCapsulesPage },
+  '/create-capsule': { content: 'content-create-capsule', nav: 'create-capsule', init: initCreateCapsulePage },
+  '/capsule': { content: 'content-capsule-detail', nav: 'my-capsules', init: initCapsuleDetailPage },
+  '/opened': { content: 'content-opened-capsule', nav: 'archive', init: initOpenedCapsulePage },
+  '/archive': { content: 'content-archive', nav: 'archive', init: initArchivePage },
+  '/profile': { content: 'content-profile', nav: 'profile', init: initProfilePage }
+};
+
+function router() {
+  const hash = (location.hash || '#/home').slice(1);
+  const [path, queryStr] = hash.split('?');
+  const params = new URLSearchParams(queryStr || '');
+
+  if (PUBLIC_PAGES[path]) {
+    document.getElementById('app-shell').style.display = 'none';
+    Object.values(PUBLIC_PAGES).forEach(id => document.getElementById(id).style.display = 'none');
+    document.getElementById(PUBLIC_PAGES[path]).style.display = 'block';
+    if (path === '/home') initHomePage();
+    if (path === '/signup') {
+      document.getElementById('signup-form').reset();
+      document.getElementById('signup-error').style.display = 'none';
+      document.getElementById('signup-error').textContent = '';
+      resetPasswordToggle('#su-pass');
+    }
+    if (path === '/login') {
+      document.getElementById('login-form').reset();
+      document.getElementById('login-error').style.display = 'none';
+      document.getElementById('login-error').textContent = '';
+      resetPasswordToggle('#li-pass');
+    }
+    window.scrollTo(0, 0);
+    return;
+  }
+
+  currentUser = Auth.currentUser();
+  if (!currentUser) { location.hash = '/login'; return; }
+
+  Object.values(PUBLIC_PAGES).forEach(id => document.getElementById(id).style.display = 'none');
+  document.getElementById('app-shell').style.display = 'flex';
+  closeMobileSidebar();
+
+  const route = APP_ROUTES[path] || APP_ROUTES['/dashboard'];
+  document.querySelectorAll('.app-content').forEach(el => el.style.display = 'none');
+  document.getElementById(route.content).style.display = 'block';
+  setActiveNav(route.nav);
+  applyDarkModeFor(currentUser);
+  fillUserChip(currentUser);
+  route.init(params);
+  window.scrollTo(0, 0);
+}
+window.addEventListener('hashchange', router);
+
+/* =========================================================================
+   ONE-TIME EVENT BINDINGS (bound once at load; safe because elements persist)
+   ========================================================================= */
+function bindOnceHandlers() {
+  // Mobile sidebar
+  document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.add('open');
+    document.getElementById('sidebar-overlay').classList.add('show');
+  });
+  document.getElementById('sidebar-overlay').addEventListener('click', closeMobileSidebar);
+
+  // Password show/hide toggles
+  document.querySelectorAll('[data-toggle-pass]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const input = document.querySelector(btn.getAttribute('data-toggle-pass'));
+      const isPass = input.type === 'password';
+      input.type = isPass ? 'text' : 'password';
+      btn.textContent = isPass ? 'Hide' : 'Show';
+    });
+  });
+
+  // Logout
+  document.querySelectorAll('[data-logout]').forEach((el) => {
+    el.addEventListener('click', (e) => { e.preventDefault(); Auth.logout(); });
+  });
+
+  // Sign up
+  document.getElementById('signup-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const errorBox = document.getElementById('signup-error');
+    const name = document.getElementById('su-name').value.trim();
+    const email = document.getElementById('su-email').value.trim();
+    const password = document.getElementById('su-pass').value;
+    if (!name || !email || password.length < 4) {
+      errorBox.textContent = 'Please fill every field. Passwords need at least 4 characters.';
+      errorBox.style.display = 'block';
+      return;
+    }
+    try { Auth.signup(name, email, password); location.hash = '/dashboard'; }
+    catch (err) { errorBox.textContent = err.message; errorBox.style.display = 'block'; }
+  });
+
+  // Login
+  document.getElementById('login-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const errorBox = document.getElementById('login-error');
+    const email = document.getElementById('li-email').value.trim();
+    const password = document.getElementById('li-pass').value;
+    try { Auth.login(email, password); location.hash = '/dashboard'; }
+    catch (err) { errorBox.textContent = err.message; errorBox.style.display = 'block'; }
+  });
+
+  // Create / edit capsule form
+  document.getElementById('capsule-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const title = document.getElementById('cc-title').value.trim();
+    const message = document.getElementById('cc-message').value.trim();
+    const mood = document.getElementById('cc-mood').value;
+    const date = document.getElementById('cc-date').value;
+    const time = document.getElementById('cc-time').value || '00:00';
+    if (!title || !message || !mood || !date) {
+      alert('Please fill in the title, message, mood, and unlock date.');
+      return;
+    }
+    const unlockAt = new Date(`${date}T${time}`).toISOString();
+    if (new Date(unlockAt).getTime() <= Date.now() && !AppState.createEditId) {
+      if (!confirm('Your unlock date/time is in the past, so this capsule will be immediately ready to open. Continue?')) return;
+    }
+    const existing = AppState.createEditId ? Capsules.get(AppState.createEditId) : null;
+    const payload = { title, message, mood, unlockAt, image: Dropzone.getImage() ?? (existing ? existing.image : null) };
+
+    if (AppState.createEditId) {
+      Capsules.update(AppState.createEditId, payload);
+      location.hash = `/capsule?id=${AppState.createEditId}`;
+    } else {
+      const capsule = Capsules.create(currentUser.id, payload);
+      location.hash = `/capsule?id=${capsule.id}`;
+    }
+  });
+  document.getElementById('cc-delete-btn').addEventListener('click', () => {
+    if (!AppState.createEditId) return;
+    if (confirm('Delete this capsule? This cannot be undone.')) {
+      Capsules.delete(AppState.createEditId);
+      location.hash = '/my-capsules';
+    }
+  });
+
+  // Capsule detail delete
+  document.getElementById('cd-delete-btn').addEventListener('click', () => {
+    if (!AppState.detailCapsuleId) return;
+    if (confirm('Delete this capsule? This cannot be undone.')) {
+      Capsules.delete(AppState.detailCapsuleId);
+      location.hash = '/my-capsules';
+    }
+  });
+
+  // Opened capsule share
+  document.getElementById('oc-share-btn').addEventListener('click', () => {
+    if (!AppState.openedCapsuleId) return;
+    const url = `${window.location.origin}${window.location.pathname}#/opened?id=${AppState.openedCapsuleId}`;
+    if (navigator.share) { navigator.share({ title: 'A memory from my Digital Time Capsule', url }).catch(() => {}); }
+    else if (navigator.clipboard) { navigator.clipboard.writeText(url).then(() => alert('Link copied to clipboard.')); }
+    else { alert(url); }
+  });
+
+  // Archive filters
+  document.querySelectorAll('.archive-filters .pill').forEach((pill) => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.archive-filters .pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      archiveState.mood = pill.getAttribute('data-mood');
+      renderArchiveList();
+    });
+  });
+  document.getElementById('archive-year-filter').addEventListener('change', (e) => {
+    archiveState.year = e.target.value; renderArchiveList();
+  });
+  document.getElementById('archive-search-input').addEventListener('input', (e) => {
+    archiveState.search = e.target.value.trim().toLowerCase(); renderArchiveList();
+  });
+
+  // Profile form + preferences
+  document.getElementById('profile-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('pr-name').value.trim();
+    const email = document.getElementById('pr-email').value.trim();
+    if (!name || !email) { alert('Name and email cannot be empty.'); return; }
+    Auth.updateProfile(currentUser.id, { name, email });
+    currentUser = Auth.currentUser();
+    fillUserChip(currentUser);
+    alert('Profile saved.');
+  });
+  document.getElementById('pr-change-pass').addEventListener('click', () => {
+    const current = prompt('Enter your current password:');
+    if (current === null) return;
+    if (current !== currentUser.password) { alert('Current password is incorrect.'); return; }
+    const next = prompt('Enter your new password (min 4 characters):');
+    if (!next || next.length < 4) { alert('Password not changed.'); return; }
+    Auth.updateProfile(currentUser.id, { password: next });
+    currentUser = Auth.currentUser();
+    alert('Password updated.');
+  });
+  document.getElementById('pref-dark-toggle').addEventListener('change', (e) => {
+    const prefs = DB.getPrefs(currentUser.id);
+    DB.savePrefs(currentUser.id, { ...prefs, darkMode: e.target.checked });
+    document.body.classList.toggle('dark', e.target.checked);
+  });
+  document.getElementById('pref-email-notif').addEventListener('change', (e) => {
+    const prefs = DB.getPrefs(currentUser.id);
+    DB.savePrefs(currentUser.id, { ...prefs, emailNotifications: e.target.checked });
+  });
+  document.getElementById('pref-default-mood').addEventListener('change', (e) => {
+    const prefs = DB.getPrefs(currentUser.id);
+    DB.savePrefs(currentUser.id, { ...prefs, defaultMood: e.target.value });
+  });
+
+  // Message char counter on create-capsule page
+  document.getElementById('cc-message').addEventListener('input', (e) => {
+    document.getElementById('cc-charcount').textContent = `${e.target.value.length}/2000`;
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  bindOnceHandlers();
+  router();
+});
+</script>
 </body>
 </html>
