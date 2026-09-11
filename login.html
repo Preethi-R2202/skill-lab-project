@@ -1,28 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome back — Digital Time Capsule</title>
-  <meta name="description" content="Log in to your private Digital Time Capsule account to view, seal, or unseal your memories.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome back — Digital Time Capsule</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .form-error { display:none; background:var(--mood-excited-bg); color:#B3562F; border-radius:var(--radius-s); padding:10px 14px; font-size:0.85rem; margin-bottom:14px; }
+</style>
 </head>
 <body>
 
 <div class="auth-wrap">
   <div class="auth-card">
-    <a href="index.html" class="brand" style="justify-content:center; margin-bottom:18px;">
-      <span class="brand-mark">⏳</span> Digital Time Capsule
-    </a>
+    <div class="brand"><span class="brand-mark">⏳</span> Digital Time Capsule</div>
     <h1>Welcome Back!</h1>
-    <p class="sub">Log in to view and manage your private time capsules.</p>
+    <p class="sub">Log in to continue to your time capsule.</p>
 
-    <form data-login-form>
+    <div class="form-error" id="login-error"></div>
+
+    <form id="login-form" novalidate>
       <div class="field">
         <label for="li-email">Email Address</label>
-        <input id="li-email" type="email" placeholder="Enter your email (e.g. preethi@example.com)" required>
+        <input id="li-email" type="email" placeholder="Enter your email" required>
       </div>
       <div class="field">
         <label for="li-pass">Password</label>
@@ -32,19 +34,14 @@
         </div>
       </div>
       <div class="row-between">
-        <label><input type="checkbox" checked> Remember me</label>
-        <a href="javascript:void(0)" onclick="alert('Demo account: preethi@example.com / password: password123')">Need demo credentials?</a>
+        <label><input type="checkbox"> Remember me</label>
+        <a href="#">Forgot password?</a>
       </div>
-      <button type="submit" class="btn btn-primary btn-block">Log In</button>
+      <button type="submit" class="btn btn-primary btn-block">Login</button>
     </form>
 
-    <div class="divider">or test instantly</div>
-    <button type="button" class="btn-google btn-demo-login" id="btn-demo-login" style="cursor:pointer; background:var(--green-soft); color:var(--green); border-color:var(--green);">
-      ⚡ Quick Test: Log in as Preethi R
-    </button>
-
-    <p class="auth-foot">Don't have an account? <a href="signup.html">Create an Account</a></p>
-    <p class="auth-foot" style="margin-top:10px;"><a href="index.html" style="color:var(--ink-soft); font-weight:normal;">← Back to Home</a></p>
+    <p class="auth-foot" style="margin-top:14px;">Don't have an account? <a href="signup.html">Sign Up</a></p>
+    <p class="auth-foot" style="font-size:0.78rem;">Demo tip: sign up first — accounts are stored in this browser only.</p>
   </div>
 </div>
 
