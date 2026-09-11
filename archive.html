@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Archive — Digital Time Capsule</title>
+  <meta name="description" content="Browse and search your collection of opened digital time capsules and reflections.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="sidebar-overlay" data-close-sidebar></div>
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <a href="index.html" class="brand"><span class="brand-mark">⏳</span> Digital Time Capsule</a>
+    <nav>
+      <a href="dashboard.html"><span class="ico">🏠</span> Dashboard</a>
+      <a href="create-capsule.html"><span class="ico">➕</span> Create Capsule</a>
+      <a href="capsule-details.html"><span class="ico">📦</span> My Capsules</a>
+      <a href="archive.html" class="active"><span class="ico">🗂️</span> Archive</a>
+      <a href="profile.html"><span class="ico">⚙️</span> Profile &amp; Settings</a>
+    </nav>
+    <a href="#" class="logout" data-logout><span class="ico">↩</span> Log Out</a>
+  </aside>
+
+  <div class="mobile-topbar">
+    <button class="icon-btn" data-open-sidebar aria-label="Open menu">☰</button>
+    <div class="brand" style="font-size:1rem;"><span class="brand-mark">⏳</span> Digital Time Capsule</div>
+    <span class="avatar">P</span>
+  </div>
+
+  <main class="app-main">
+    <div class="app-topbar">
+      <div class="search">
+        🔍 <input type="text" placeholder="Search your capsules…" data-search style="border:none; background:none; outline:none; font-size:0.88rem; width:100%; color:var(--ink);">
+      </div>
+      <div class="actions">
+        <button class="icon-btn" title="Toggle theme">🌙</button>
+        <button class="icon-btn" title="Notifications">🔔</button>
+        <a href="profile.html" class="user-chip"><span class="avatar">P</span> Preethi R ▾</a>
+      </div>
+    </div>
+
+    <div class="app-content">
+      <h2>My Archive</h2>
+      <p>All your opened capsules, preserved forever for you to rediscover.</p>
+
+      <div class="archive-filters">
+        <button class="pill active">All</button>
+        <select class="select-pill">
+          <option value="Mood">Filter by Mood</option>
+          <option value="Hopeful">Hopeful</option>
+          <option value="Grateful">Grateful</option>
+          <option value="Excited">Excited</option>
+          <option value="Peaceful">Peaceful</option>
+        </select>
+        <select class="select-pill">
+          <option value="Year">Filter by Year</option>
+          <option value="2026">2026</option>
+          <option value="2025">2025</option>
+          <option value="2024">2024</option>
+        </select>
+        <div class="archive-search">
+          🔍 <input type="text" placeholder="Search archive letters...">
+        </div>
+      </div>
+
+      <div class="capsule-list">
+        <!-- Rendered dynamically by script.js -->
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

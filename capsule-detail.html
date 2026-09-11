@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Capsule Details — Digital Time Capsule</title>
+  <meta name="description" content="View the locked countdown timer or open your digital time capsule.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="sidebar-overlay" data-close-sidebar></div>
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <a href="index.html" class="brand"><span class="brand-mark">⏳</span> Digital Time Capsule</a>
+    <nav>
+      <a href="dashboard.html"><span class="ico">🏠</span> Dashboard</a>
+      <a href="create-capsule.html"><span class="ico">➕</span> Create Capsule</a>
+      <a href="capsule-details.html" class="active"><span class="ico">📦</span> My Capsules</a>
+      <a href="archive.html"><span class="ico">🗂️</span> Archive</a>
+      <a href="profile.html"><span class="ico">⚙️</span> Profile &amp; Settings</a>
+    </nav>
+    <a href="#" class="logout" data-logout><span class="ico">↩</span> Log Out</a>
+  </aside>
+
+  <div class="mobile-topbar">
+    <button class="icon-btn" data-open-sidebar aria-label="Open menu">☰</button>
+    <div class="brand" style="font-size:1rem;"><span class="brand-mark">⏳</span> Digital Time Capsule</div>
+    <span class="avatar">P</span>
+  </div>
+
+  <main class="app-main">
+    <div class="app-topbar">
+      <div class="search">
+        🔍 <input type="text" placeholder="Search your capsules…" data-search style="border:none; background:none; outline:none; font-size:0.88rem; width:100%; color:var(--ink);">
+      </div>
+      <div class="actions">
+        <button class="icon-btn" title="Toggle theme">🌙</button>
+        <button class="icon-btn" title="Notifications">🔔</button>
+        <a href="profile.html" class="user-chip"><span class="avatar">P</span> Preethi R ▾</a>
+      </div>
+    </div>
+
+    <div class="app-content">
+      <div style="margin-bottom:18px;">
+        <a href="dashboard.html" style="font-size:0.88rem; color:var(--green); font-weight:600;">← Back to Dashboard</a>
+      </div>
+
+      <div class="capsule-detail-card">
+        <div class="capsule-hero-img"></div>
+        <div class="capsule-detail-body">
+          <h2>Loading Capsule…</h2>
+          <span class="mood-tag hopeful"><span class="dot"></span>Hopeful</span>
+
+          <div class="dates">
+            <div>Created on <strong>—</strong></div>
+            <div>Unlocks on <strong>—</strong></div>
+          </div>
+
+          <div class="lock-panel">
+            <div class="lock-ico">🔒</div>
+            <h3>This memory is safely sealed.</h3>
+            <p>Your message is stored securely and cannot be read until the unlock date arrives.</p>
+
+            <div class="countdown" id="active-countdown">
+              <div class="unit"><div class="n" data-days>—</div><div class="u">days</div></div>
+              <div class="unit"><div class="n" data-hours>—</div><div class="u">hours</div></div>
+              <div class="unit"><div class="n" data-minutes>—</div><div class="u">minutes</div></div>
+              <div class="unit"><div class="n" data-seconds>—</div><div class="u">seconds</div></div>
+            </div>
+
+            <div class="notice-row">🔔 You'll receive a notification when it's ready to open</div>
+          </div>
+
+          <div class="form-actions" style="margin-top:26px;">
+            <button type="button" class="btn btn-danger btn-sm" id="btn-delete-capsule">Delete</button>
+            <a href="create-capsule.html" class="btn btn-outline btn-sm">Edit Capsule</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

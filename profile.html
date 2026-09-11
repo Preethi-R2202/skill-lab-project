@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile &amp; Settings — Digital Time Capsule</title>
+  <meta name="description" content="Manage your account profile, preferences, dark mode, and notifications.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="sidebar-overlay" data-close-sidebar></div>
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <a href="index.html" class="brand"><span class="brand-mark">⏳</span> Digital Time Capsule</a>
+    <nav>
+      <a href="dashboard.html"><span class="ico">🏠</span> Dashboard</a>
+      <a href="create-capsule.html"><span class="ico">➕</span> Create Capsule</a>
+      <a href="capsule-details.html"><span class="ico">📦</span> My Capsules</a>
+      <a href="archive.html"><span class="ico">🗂️</span> Archive</a>
+      <a href="profile.html" class="active"><span class="ico">⚙️</span> Profile &amp; Settings</a>
+    </nav>
+    <a href="#" class="logout" data-logout><span class="ico">↩</span> Log Out</a>
+  </aside>
+
+  <div class="mobile-topbar">
+    <button class="icon-btn" data-open-sidebar aria-label="Open menu">☰</button>
+    <div class="brand" style="font-size:1rem;"><span class="brand-mark">⏳</span> Digital Time Capsule</div>
+    <span class="avatar">P</span>
+  </div>
+
+  <main class="app-main">
+    <div class="app-topbar">
+      <div class="search">
+        🔍 <input type="text" placeholder="Search your capsules…" data-search style="border:none; background:none; outline:none; font-size:0.88rem; width:100%; color:var(--ink);">
+      </div>
+      <div class="actions">
+        <button class="icon-btn" title="Toggle theme">🌙</button>
+        <button class="icon-btn" title="Notifications">🔔</button>
+        <a href="profile.html" class="user-chip"><span class="avatar">P</span> Preethi R ▾</a>
+      </div>
+    </div>
+
+    <div class="app-content">
+      <h2>Profile &amp; Settings</h2>
+      <p>Manage your account, display preferences, and privacy controls.</p>
+
+      <div class="profile-grid">
+        <div class="panel">
+          <div class="profile-avatar-row">
+            <span class="avatar" style="width:58px; height:58px; font-size:1.3rem;">P</span>
+            <div>
+              <div style="font-weight:600; font-size:1.1rem;">Preethi R</div>
+              <span style="font-size:0.82rem; color:var(--green); font-weight:600;">Active Account</span>
+            </div>
+          </div>
+          <div class="field">
+            <label for="pr-name">Full Name</label>
+            <input id="pr-name" type="text" value="Preethi R" required>
+          </div>
+          <div class="field">
+            <label for="pr-email">Email Address</label>
+            <input id="pr-email" type="email" value="preethi@example.com" required>
+          </div>
+          <div class="field">
+            <label>Security</label>
+            <button type="button" class="btn btn-outline btn-sm" style="width:100%;" onclick="alert('Password update is enabled. Your account is secured.')">Change Password</button>
+          </div>
+          <button type="button" class="btn btn-primary btn-block" style="margin-top:10px;">Save Profile Changes</button>
+        </div>
+
+        <div class="panel">
+          <h3>Preferences</h3>
+
+          <div class="settings-row">
+            <div class="txt">
+              <strong>Dark Mode</strong>
+              <span>Switch between clean light and sleek dark mode theme</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" data-dark-toggle>
+              <span class="track"></span>
+            </label>
+          </div>
+
+          <div class="settings-row">
+            <div class="txt">
+              <strong>Email Notifications</strong>
+              <span>Get notified when your capsule is ready to open</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" checked>
+              <span class="track"></span>
+            </label>
+          </div>
+
+          <div class="settings-row">
+            <div class="txt">
+              <strong>Default Mood</strong>
+              <span>Preferred mood tag for new capsules</span>
+            </div>
+            <select class="select-pill">
+              <option value="Hopeful">Hopeful ✨</option>
+              <option value="Grateful">Grateful 🌿</option>
+              <option value="Excited">Excited 🔥</option>
+              <option value="Peaceful">Peaceful ☁️</option>
+            </select>
+          </div>
+
+          <h3 style="margin-top:26px;">Privacy &amp; Data</h3>
+          <div class="settings-row">
+            <div class="txt">
+              <strong>Data Isolation</strong>
+              <span>Your capsules are strictly private and isolated to your account.</span>
+            </div>
+            <span style="font-size:0.85rem; color:var(--opened-fg); font-weight:600;">Active ✓</span>
+          </div>
+
+          <div style="margin-top:24px; padding-top:16px; border-top:1px solid var(--line);">
+            <button type="button" class="btn btn-danger btn-sm" style="width:100%;" data-logout>Log Out of Account</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

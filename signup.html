@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create your account — Digital Time Capsule</title>
+  <meta name="description" content="Join Digital Time Capsule and start preserving your letters and memories for the future.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="auth-wrap">
+  <div class="auth-card">
+    <a href="index.html" class="brand" style="justify-content:center; margin-bottom:18px;">
+      <span class="brand-mark">⏳</span> Digital Time Capsule
+    </a>
+    <h1>Create your account</h1>
+    <p class="sub">Start preserving your precious memories for tomorrow.</p>
+
+    <form data-signup-form>
+      <div class="field">
+        <label for="su-name">Full Name</label>
+        <input id="su-name" type="text" placeholder="e.g., Alex Morgan" required>
+      </div>
+      <div class="field">
+        <label for="su-email">Email Address</label>
+        <input id="su-email" type="email" placeholder="Enter your email" required>
+      </div>
+      <div class="field">
+        <label for="su-pass">Password</label>
+        <div class="input-wrap">
+          <input id="su-pass" type="password" placeholder="Create a password (min 6 characters)" required minlength="6">
+          <button type="button" class="toggle-eye" data-toggle-pass="#su-pass">Show</button>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Sign Up &amp; Open Dashboard</button>
+    </form>
+
+    <p class="auth-foot">Already have an account? <a href="login.html">Log In</a></p>
+    <p class="auth-foot" style="margin-top:10px;"><a href="index.html" style="color:var(--ink-soft); font-weight:normal;">← Back to Home</a></p>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
